@@ -58,25 +58,7 @@ def main():
 if __name__ == '__main__':
     try:
         main()
-#        val1,val2,val3,val4 =  main()
-#        f = open("/data/data.csv","a")
- ##       f.write(datetime.today().strftime('%Y-%m-%d' + "," '%H:%M:%S')+","+str( val1)+","+str(val2)+","+str(val3)+","+str(val4)+"\n")
-   #     print(datetime.today().strftime('%Y-%m-%d' + "," '%H:%M:%S') + ": " + str(val1) + ":" + str(val2)+":"+str(val3)+":"+str(val4))   
-
-#        from pandas import read_csv
-#        mydf = read_csv("/data/data.csv")
-#        mydf.set_index('Date',inplace=True)
-#        new_mydf=mydf.interpolate(method="time")
-#        n=new_mydf.dropna()
- #       print(mydf.head())
-        #print(n)
-#        main()
-#heeeereeeeeee    print (st)
-#    except KeyboardInterrupt:
     except:
-     #   f = open("/data/data.csv","a")
-      #  f.write(datetime.today().strftime('%Y-%m-%d' + "," '%H:%M:%S')+","+str( val1)+","+str(val2)+","+str(val3)+","+str(val4)+"\n")
-       # print(datetime.today().strftime('%Y-%m-%d' + "," '%H:%M:%S') + ": " + str(val1) + ":" + str(val2)+":"+str(val3)+":"+str(val4))   
         connection.close()
         import pandas as pd
         df=pd.read_csv("/data/data.csv")
@@ -97,7 +79,9 @@ if __name__ == '__main__':
         dff['Flame']=dff['Flame'].astype('int')
         dff['Humidity']=dff['Humidity'].round(0).astype('int')
         dff['Temperature']=dff['Temperature'].round(0).astype('int')
-        dff.to_csv('/data/data1.csv') #, index=False)     
+        dff.to_csv('/data/data1.csv') #, index=False)
+	dff.flush
+        dff.close
 	print(dff)
 	url = os.environ.get('CLOUDAMQP_URL', 'amqps://kacojdss:aUd8wEoKcyHLCK46a1_AifxUBDzjsLHi@beaver.rmq.cloudamqp.com/kacojdss')
 	params = pika.URLParameters(url)
@@ -118,7 +102,4 @@ if __name__ == '__main__':
 
 
 
- #   f.flush
-  #  f.close
 
-## a=w and the close and flush is enabled
