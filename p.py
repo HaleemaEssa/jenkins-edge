@@ -88,12 +88,8 @@ if __name__ == '__main__':
         df=df.replace({'Humidity':'0', 'Temperature':'0'},np.NaN)
         df=df.interpolate()
         df3=df.pivot_table(index=pd.Grouper(freq='T')) #.agg({'Sound':'sum','Flame':'sum'}) #,columns=['Humidity','Temperature']) #/// freq=S,T,h,M,Y
-#        df3 = df3[['Date','Sound','Flame','Humidity','Temperature']] #[['mean', '0', '1', '2', '3']]
         print(df3)
         dff = df3.reindex(columns=['Sound','Flame','Humidity','Temperature'])
-#        dff.columns = pd.Index([0], dtype='int64')
-
-        #df3.sort(['Date','Sound','Flame','Humidity','Temperature'])
         print(dff)
         dff['Sound']=dff['Sound'].apply(np.ceil) #().astype('int')
         dff['Sound']=dff['Sound'].astype('int')
@@ -103,95 +99,25 @@ if __name__ == '__main__':
         dff['Temperature']=dff['Temperature'].round(0).astype('int')
         dff.to_csv('/data/data1.csv') #, index=False)     
 	print(dff)
-        
-#######################
-#######################
-#########################
 	url = os.environ.get('CLOUDAMQP_URL', 'amqps://kacojdss:aUd8wEoKcyHLCK46a1_AifxUBDzjsLHi@beaver.rmq.cloudamqp.com/kacojdss')
 	params = pika.URLParameters(url)
 	params.socket_timeout = 5
-
 	connection1 = pika.BlockingConnection(params) # Connect to CloudAMQP
 	channel1 = connection1.channel() # start a channel
 	channel1.queue_declare(queue='pdfprocess') # Declare a queue
-# send a message
-##import pandas as pd
-##df=pd.read_csv('data1.csv')
-##for row in df:
-#with open('data1.csv', 'r') as read_obj:
- #   csv_reader = reader(read_obj)
-   # header = next(csv_reader)
-
-	csv.register_dialect('csv_dialect',
-                    	delimiter='[',
-                    	skipinitialspace=True,
-                    	quoting=csv.QUOTE_ALL)
+	csv.register_dialect('csv_dialect',delimiter='[',skipinitialspace=True,quoting=csv.QUOTE_ALL)
 	with open('/data/data1.csv', 'r') as csvfile:
     		reader = csv.reader(csvfile, dialect='csv_dialect')
     		header=next(reader)
-   
- # Check file as empty
-    		if header != None:
-#import pandas as pd
-#df=pd.read_csv('data1.csv')
+   		if header != None:
         		for row in reader:
-   # row variable is a list that represents a row in csv
-#import pandas as pd
-#df=pd.read_csv('data1.csv') #,usecols=['Date', 'Sound', 'Flame', 'Humidity', 'Temperature']) 
-
-#for row in 'data1.csv': 
-           		print(row)
-           		channel1.basic_publish(exchange='', routing_key='pdfprocess', body=str(row))
+           			print(row)
+           			channel1.basic_publish(exchange='', routing_key='pdfprocess', body=str(row))
 		print ("[x] Message sent to consumer")
 		connection1.close()
 
 
-############################
-###########################
-##########################
-        
 
-        
-#####        from pandas import read_csv
-####        mydf = read_csv("/data/data.csv")
-#        mydf = read_csv("/data/data.csv",parse_dates=['date'],dayfirst=True)
-       # mydf.set_index('date',inplace=True)
-        #new_mydf=mydf.interpolate()
-       # new_mydf=mydf.replace(0,np.NaN)
-#        n=new_mydf.dropna()
-#        import pandas as pd 
- #       import numpy as np
-  #      df=pd.read_csv("/data/data.csv")
-#        new_mydf=mydf.pivot_table(index="Time",columns="Date",aggfunc="sum") 
-#####        new_mydf = mydf.to_csv("ddd.csv",header=False)
-  #      new_mydf=df.replace(0,np.NaN)
-#####        print(new_mydf)        
-    #    print("\n")       
-     #   n=new_mydf.dropna(how="all")
-      #  print(n)
-##1 Cloud        df4=df.resample('D').mean() #in Cloud
-##2         print(df4)
-##3         print('Interrupted')
-        ####try:
-#            from pandas import read_csv
-#            mydf = read_csv("/data/data.csv",parse_dates=["Date"])
- #           mydf.set_index('Date',inplace=True)
-  #          new_mydf=mydf.interpolate(method="time")
-    #        n=new_mydf.dropna()
-   #         print(mydf.head())
-     #       print(n)
-            ####sys.exit(0)
-        ####except SystemExit:
-            ####os._exit(0)
-
-          # from pandas import read_csv
-#           f = open("/data/data.csv","r+")
-          # mydf.set_index('Date',inplace=True)
-          # new_mydf=mydf.interpolate(method="time")
-           #n=new_mydf.dropna()
- #          print(f)
-  #         os.exit(0)
-#           print(mydf.head())
  #   f.flush
   #  f.close
 
