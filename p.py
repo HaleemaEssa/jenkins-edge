@@ -79,7 +79,7 @@ if __name__ == '__main__':
         dff['Flame']=dff['Flame'].astype('int')
         dff['Humidity']=dff['Humidity'].round(0).astype('int')
         dff['Temperature']=dff['Temperature'].round(0).astype('int')
-        dff.to_csv('/data/data1.csv') #, index=False)
+        dff.to_csv('/data/data1.csv')
 	dff.flush
         dff.close
 	print(dff)
