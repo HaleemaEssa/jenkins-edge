@@ -25,7 +25,7 @@ RUN pip3 install pandas
 
 
 
-CMD ["pe1.py"]
+CMD ["p.py"]
 ENTRYPOINT ["python3"]
 
 
