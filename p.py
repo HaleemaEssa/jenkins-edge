@@ -107,13 +107,13 @@ if __name__ == '__main__':
 #######################
 #######################
 #########################
-url = os.environ.get('CLOUDAMQP_URL', 'amqps://kacojdss:aUd8wEoKcyHLCK46a1_AifxUBDzjsLHi@beaver.rmq.cloudamqp.com/kacojdss')
-params = pika.URLParameters(url)
-params.socket_timeout = 5
+	url = os.environ.get('CLOUDAMQP_URL', 'amqps://kacojdss:aUd8wEoKcyHLCK46a1_AifxUBDzjsLHi@beaver.rmq.cloudamqp.com/kacojdss')
+	params = pika.URLParameters(url)
+	params.socket_timeout = 5
 
-connection1 = pika.BlockingConnection(params) # Connect to CloudAMQP
-channel1 = connection1.channel() # start a channel
-channel1.queue_declare(queue='pdfprocess') # Declare a queue
+	connection1 = pika.BlockingConnection(params) # Connect to CloudAMQP
+	channel1 = connection1.channel() # start a channel
+	channel1.queue_declare(queue='pdfprocess') # Declare a queue
 # send a message
 ##import pandas as pd
 ##df=pd.read_csv('data1.csv')
@@ -122,28 +122,28 @@ channel1.queue_declare(queue='pdfprocess') # Declare a queue
  #   csv_reader = reader(read_obj)
    # header = next(csv_reader)
 
-csv.register_dialect('csv_dialect',
-                    delimiter='[',
-                    skipinitialspace=True,
-                    quoting=csv.QUOTE_ALL)
-with open('/data/data1.csv', 'r') as csvfile:
-    reader = csv.reader(csvfile, dialect='csv_dialect')
-    header=next(reader)
+	csv.register_dialect('csv_dialect',
+                    	delimiter='[',
+                    	skipinitialspace=True,
+                    	quoting=csv.QUOTE_ALL)
+	with open('/data/data1.csv', 'r') as csvfile:
+    		reader = csv.reader(csvfile, dialect='csv_dialect')
+    		header=next(reader)
    
  # Check file as empty
-    if header != None:
+    		if header != None:
 #import pandas as pd
 #df=pd.read_csv('data1.csv')
-        for row in reader:
+        		for row in reader:
    # row variable is a list that represents a row in csv
 #import pandas as pd
 #df=pd.read_csv('data1.csv') #,usecols=['Date', 'Sound', 'Flame', 'Humidity', 'Temperature']) 
 
 #for row in 'data1.csv': 
-           print(row)
-           channel1.basic_publish(exchange='', routing_key='pdfprocess', body=str(row))
-print ("[x] Message sent to consumer")
-connection1.close()
+           		print(row)
+           		channel1.basic_publish(exchange='', routing_key='pdfprocess', body=str(row))
+		print ("[x] Message sent to consumer")
+		connection1.close()
 
 
 ############################
